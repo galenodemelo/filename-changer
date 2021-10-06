@@ -1,6 +1,6 @@
 <?php
 if (!empty($_FILES) && !empty($_POST['danfe-code']) && !empty($_POST['customer-name'])) {
-	require './../core.php';
+	require './core.php';
 }
 ?>
 <!DOCTYPE html>
