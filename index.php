@@ -1,6 +1,6 @@
 <?php
 if (!empty($_FILES) && !empty($_POST['danfe-code']) && !empty($_POST['customer-name'])) {
-	require 'core.php';
+	require './../core.php';
 }
 ?>
 <!DOCTYPE html>
@@ -31,7 +31,7 @@ if (!empty($_FILES) && !empty($_POST['danfe-code']) && !empty($_POST['customer-n
 		<input type="hidden" id="danfe-code" name="danfe-code" />
 		<input type="hidden" id="customer-name" name="customer-name" />
 	</form>
-	<script src="vendor/build/pdf.js"></script>
+	<script src="js/build/pdf.js"></script>
 	<script src="scripts.js"></script>
 </body>
 
