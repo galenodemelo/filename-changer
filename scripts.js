@@ -51,7 +51,7 @@ function readFile(file) {
 
 // Gets text from file
 function getText(data) {
-	pdfjsLib.GlobalWorkerOptions.workerSrc = './vendor/build/pdf.worker.js';
+	pdfjsLib.GlobalWorkerOptions.workerSrc = './js/build/pdf.worker.js';
 	pdfjsLib.getDocument(data).promise.then((pdf) => {
 		pdf.getPage(1).then((page) => {
 			page.getTextContent().then((textContent) => {
