@@ -20,9 +20,8 @@ if ($countFiles > 1) {
 	$zip = new ZipArchive;
 	$zip->open($zipFile, ZIPARCHIVE::CREATE);
 
-	foreach ($files as $file) {
-		$pdfFile = PDF_PATH . "/" . $file;
-		$zip->addFile($file["tmp_name"], $file["name"]);
+	for ($i = 0; $i < $countFiles; $i++) {
+		$zip->addFile($files["tmp_name"][$i], $files["name"][$i]);
 	}
 	$zip->close();
 
