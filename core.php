@@ -11,8 +11,6 @@ $countFiles = count($files["name"]);
 // Rename all the files
 for ($i = 0; $i < $countFiles; $i++) {
 	$files["name"][$i] = "NFE_{$danfeCodes[$i]}_{$customerNames[$i]}.pdf";
-
-	copy($files["tmp_name"][$i], PDF_PATH . "/" . $files["name"][$i]);
 }
 
 // Create a ZIP file if there"s more than 1 file
@@ -34,13 +32,6 @@ if ($countFiles > 1) {
 	header("Content-disposition: filename={$zipName}");
 	header("Content-length: {$fileLength}");
 	readfile($zipFile);
-
-	unlink($zipFile);
-
-	foreach ($files["name"] as $file) {
-		$pdfFile = PDF_PATH . "/" . $file;
-		unlink($pdfFile);
-	}
 
 	exit;
 } else {
