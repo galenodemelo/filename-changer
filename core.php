@@ -17,7 +17,7 @@ for ($i = 0; $i < $countFiles; $i++) {
     $key = array_search($filename, array_column($extraData, "filename"));
     $data = $extraData[$key];
 
-	$newName = "NFE_{$data['danfeCode']}_{$data['customerName']}.pdf";
+	$newName = "NFE_{$data->danfeCode}_{$data->customerName}.pdf";
     $zip->addFile($files["tmp_name"][$i], $newName);
 }
 
