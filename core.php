@@ -1,8 +1,7 @@
 <?php
 define('ZIP_PATH', __DIR__ );
 
-$danfeCodes = explode(",", filter_input(INPUT_POST, "danfe-code"));
-$customerNames = explode(",", filter_input(INPUT_POST, "customer-name"));
+$extraData = json_decode(filter_input(INPUT_POST, "extra-data"));
 
 $files = $_FILES["file-input"];
 $countFiles = count($files["name"]);
@@ -14,7 +13,11 @@ if (!$zip->open($zipFile, ZIPARCHIVE::CREATE)) exit("Não foi possível criar o 
 
 // Rename all the files
 for ($i = 0; $i < $countFiles; $i++) {
-	$newName = "NFE_{$danfeCodes[$i]}_{$customerNames[$i]}.pdf";
+    $filename = $files["name"][$i];
+    $key = array_search($filename, array_column($extraData, "filename"));
+    $data = $extraData[$key];
+
+	$newName = "NFE_{$data['danfeCode']}_{$data['customerName']}.pdf";
     $zip->addFile($files["tmp_name"][$i], $newName);
 }
 
