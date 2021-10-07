@@ -91,3 +91,7 @@ button {
   font-weight: bold;
   text-transform: uppercase;
 }
+
+button[disabled] {
+    opacity: .1;
+}
