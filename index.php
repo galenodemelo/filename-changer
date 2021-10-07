@@ -1,5 +1,5 @@
 <?php
-if (!empty($_FILES) && !empty($_POST['danfe-code']) && !empty($_POST['customer-name'])) {
+if (!empty($_FILES) && !empty($_POST['extra-data'])) {
 	require './core.php';
 }
 ?>
@@ -27,9 +27,8 @@ if (!empty($_FILES) && !empty($_POST['danfe-code']) && !empty($_POST['customer-n
 
 		<ul id="files-list"></ul>
 
-		<button>Renomear arquivos</button>
-		<input type="hidden" id="danfe-code" name="danfe-code" />
-		<input type="hidden" id="customer-name" name="customer-name" />
+		<button type="submit" id="bto-submit">Renomear arquivos</button>
+		<input type="hidden" id="extra-data" name="extra-data" />
 	</form>
 	<script src="js/build/pdf.js"></script>
 	<script src="scripts.js"></script>

@@ -9,22 +9,22 @@ dropContainer.addEventListener('dragover', (event) => {
 })
 
 // On drop
-dropContainer.addEventListener('drop', (event) => {
+dropContainer.addEventListener('drop', async (event) => {
 	event.preventDefault()
+    document.querySelector("#bto-submit").disabled = true
 	fileInput.files = event.dataTransfer.files
 	listFiles()
 
-	for (let i = 0, j = fileInput.files.length;
-		i < j;
-		i++) {
+    let fileDataList = []
+    for (let file of fileInput.files) {
+        const extractedFile = await readFile(file)
+        const fileData = await getText(extractedFile.target.result)
+        fileData.filename = file.name
+        fileDataList.push(fileData)
+    }
 
-		// Read the file
-		readFile(fileInput.files[i]).then((resolve) => {
-			const data = resolve.target.result
-			getText(data)
-		})
-	}
-
+    document.querySelector("#extra-data").value = JSON.stringify(fileDataList)
+    document.querySelector("#bto-submit").disabled = false
 	return false
 })
 
@@ -51,19 +51,19 @@ function readFile(file) {
 
 // Gets text from file
 function getText(data) {
-	pdfjsLib.GlobalWorkerOptions.workerSrc = './js/build/pdf.worker.js';
-	pdfjsLib.getDocument(data).promise.then((pdf) => {
-		pdf.getPage(1).then((page) => {
-			page.getTextContent().then((textContent) => {
-
-				const danfeCode = getDanfeCode(textContent)
-				const customerName = getCustomerName(textContent)
-
-				document.getElementById('danfe-code').value += `${danfeCode},`
-				document.getElementById('customer-name').value += `${customerName},`
-			})
-		})
-	})
+    return new Promise((resolve, reject) => {
+        pdfjsLib.GlobalWorkerOptions.workerSrc = './js/build/pdf.worker.js';
+        pdfjsLib.getDocument(data).promise.then((pdf) => {
+            pdf.getPage(1).then((page) => {
+                page.getTextContent().then((textContent) => {
+                    resolve({
+                        danfeCode: getDanfeCode(textContent),
+                        customerName: getCustomerName(textContent)
+                    })
+                })
+            })
+        })
+    })
 }
 
 function getDanfeCode(pdfText) {
